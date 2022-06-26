@@ -16,4 +16,14 @@ app.get('/api/fans', function (req, res) {
     res.send('{}');
 });
 
+app.get('/api/fans/fanA', function (req, res) {
+    fans.fanA.start(req.query.speed);
+    res.send('{}');
+});
+
+app.get('/api/fans/fanB', function (req, res) {
+    fans.fanB.start(req.query.speed);
+    res.send('{}');
+});
+
 app.listen(8000);

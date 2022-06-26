@@ -2,18 +2,48 @@
 <html>
 <head>
     <title>Winduino</title>
+    <style>
+        .container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+        }
+        .slider {
+            -webkit-appearance: slider-vertical;
+            height: 400px;
+            width: 50px;
+        }
+    </style>
 </head>
 <body>
-    <div class="slidecontainer">
+    <div class="container">
+        <input
+            type="range" min="0" max="100" value="50" class="slider" id="fanLeft"
+            oninput="updateSpeedLeft(this.value)"
+        />
         <input
             type="range" min="0" max="100" value="50" class="slider" id="fans"
-            oninput="updateSpeed(this.value)"
+            oninput="updateSpeedBoth(this.value)"
+        />
+        <input
+            type="range" min="0" max="100" value="50" class="slider" id="fanRight"
+            oninput="updateSpeedRight(this.value)"
         />
     </div>
 
 <script>
-        function updateSpeed(speed) {
+        function updateSpeedBoth(speed) {
+            document.getElementById('fanLeft').value = speed;
+            document.getElementById('fanRight').value = speed;
             fetch(`/api/fans?speed=${speed}`);
+        }
+        function updateSpeedLeft(speed) {
+            document.getElementById('fans').value = 0;
+            fetch(`/api/fans/fanB?speed=${speed}`);
+        }
+        function updateSpeedRight(speed) {
+            document.getElementById('fans').value = 0;
+            fetch(`/api/fans/fanA?speed=${speed}`);
         }
     </script>
 </body>
